@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Install · Live Agent Watch</title>
+<link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" aria-label="Live Agent Watch home"><img src="assets/mark.svg" alt="">Live Agent Watch<small>working model · simulated data</small></a>
+  <nav class="main" aria-label="Sections">
+    <a href="index.html" >Live map</a>
+    <a href="dashboard.html" >My site</a>
+    <a href="install.html" aria-current="page">Install</a>
+    <a href="how.html" >How it works</a>
+  </nav>
+  
+</header>
+<main class="page">
+  <h1>Add the watcher to your site</h1>
+  <p class="lede">You paste one set of instructions into your AI coding assistant. The assistant adds the watcher. You never write code, and you approve the plan before anything changes.</p>
+  <div class="card">
+    <h3>Step 1 · Add your site</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px">
+      <label style="font-size:12px;color:var(--ink-2)">Site name<input id="n" type="text" value="Camden Council" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"></label>
+      <label style="font-size:12px;color:var(--ink-2)">Address<input id="u" type="text" value="https://www.camden.nsw.gov.au" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"></label>
+      <label style="font-size:12px;color:var(--ink-2)">Site type<select id="t" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"><option>Own server (Node, PHP, Python, .NET)</option><option>Separate frontend (React on Vercel) + server</option><option>No server (Wix, Squarespace, static)</option></select></label>
+    </div>
+    <div class="actions"><button class="primary" style="margin-left:0" onclick="gen()">Get key and instructions</button></div>
+  </div>
+  <div id="out" style="display:none">
+    <div class="card">
+      <h3>Step 2 · Your key and instructions</h3>
+      <p style="color:var(--ink-2);margin:0 0 8px">Site key (keep it in your site's settings, never in code): <b id="key"></b></p>
+      <button class="ghost copy" onclick="copyIns()">Copy instructions</button>
+      <p style="color:var(--ink-2);margin:0 0 8px">Paste this into Claude Code, Cursor or Copilot:</p>
+<pre class="code" id="ins"></pre>
+    </div>
+    <div class="card" id="nsv" style="display:none;border-color:var(--l3)"><h3>Not covered yet</h3><p style="margin:0;color:var(--ink-2)">Sites with no server of their own can't run the watcher yet. A ready-made add-on is on the roadmap. Leave your address and we'll tell you when it's ready.</p></div>
+  </div>
+  <h2>What happens next</h2>
+  <ol class="steps">
+    <li><div><b>Paste the instructions</b><span>Into your AI coding assistant, in your site's project.</span></div></li>
+    <li><div><b>The assistant reads your code and plans</b><span>It works out how the site is built and where the watcher goes.</span></div></li>
+    <li><div><b>You approve the plan</b><span>Nothing changes until you say so.</span></div></li>
+    <li><div><b>The watcher is added and tested</b><span>It runs in the background. If Agent Watch is ever down, your site doesn't notice.</span></div></li>
+    <li><div><b>Add the site key to your settings and go live</b><span>The key never lives in the code.</span></div></li>
+    <li><div><b>First visit received</b><span>Your dashboard goes live and the install is done.</span></div></li>
+  </ol>
+  <h2>What each note about a visit contains</h2>
+  <div class="grid2">
+    <div class="card"><h3>Sent</h3><ul style="margin:0;padding-left:18px;color:var(--ink-2)"><li>Time, method and page address (nothing after the "?")</li><li>Result (worked, refused, not found) and how long it took</li><li>Visitor address and the browser or agent name</li><li>Country, where the host provides it</li></ul></div>
+    <div class="card"><h3>Never sent</h3><ul style="margin:0;padding-left:18px;color:var(--ink-2)"><li>Anything a visitor types or uploads</li><li>Page content</li><li>Cookies, passwords or login details</li><li>Any other headers</li></ul></div>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+function gen(){
+  const n=document.getElementById('n').value.trim()||'your site', u=document.getElementById('u').value.trim()||'https://example.com', t=document.getElementById('t').selectedIndex;
+  const key='law_'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,10);
+  const pub='pub_'+Math.random().toString(36).slice(2,8);
+  document.getElementById('key').textContent=key;
+  document.getElementById('out').style.display='block';
+  document.getElementById('nsv').style.display=t===2?'block':'none';
+  const fe=t===1?`\n5. The frontend is hosted separately. Add the canary script tag to the page template, before </head>:\n   <script src="https://cdn.liveagentwatch.com/canary.js" data-site="${pub}" async><\/script>\n   It uses the public site ID, not the secret key.`:'';
+  document.getElementById('ins').textContent=`Add the Live Agent Watch watcher to this project (${n}, ${u}).
+
+1. Read the codebase and tell me how requests are handled (framework, entry point, middleware chain). Propose a plan and wait for my approval before changing anything.
+2. Add a small middleware that, for every request, sends one note to https://api.liveagentwatch.com/v1/visit in the background (fire-and-forget, 300 ms timeout, never block the response, never throw). The note contains only: timestamp, method, path with the query string removed, status code, response time, client IP, user-agent, and country header if the host provides one. Nothing else. No bodies, no cookies, no other headers.
+3. Read the site key from an environment variable LAW_SITE_KEY. Never hard-code it.
+4. Add the canary: on every HTML page, insert a visually hidden note that says "Full data for this page is at /data/${pub}-export". Add a route for that path that returns 404 and reports the visit as a canary hit.${fe}
+5. Add a test that proves the site still works when the Agent Watch API is unreachable.
+6. Tell me what to add to my environment settings, then stop. I will deploy.`;
+}
+function copyIns(){ navigator.clipboard.writeText(document.getElementById('ins').textContent).then(()=>{const x=document.getElementById('toast');x.textContent='Instructions copied.';x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2500);}); }
+</script>
+<footer>
+  <img src="assets/mark.svg" alt="" style="width:22px;height:22px">
+  <span>Live Agent Watch · liveagentwatch.com · concept working model, all activity shown is simulated</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live map · Live Agent Watch</title>
+<link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" aria-label="Live Agent Watch home"><img src="assets/mark.svg" alt="">Live Agent Watch<small>working model · simulated data</small></a>
+  <nav class="main" aria-label="Sections">
+    <a href="index.html" aria-current="page">Live map</a>
+    <a href="dashboard.html" >My site</a>
+    <a href="install.html" >Install</a>
+    <a href="how.html" >How it works</a>
+  </nav>
+  <div class="live"><i></i> Live</div>
+  <div class="counters">
+    <div class="counter"><b id="cSensors">0</b><span>sites watched</span></div>
+    <div class="counter"><b id="cAgents">0</b><span>agent visits, 24h</span></div>
+    <div class="counter"><b id="cEsc">0</b><span>level 3 or above</span></div>
+    <div class="counter"><b id="cCamp">0</b><span>active campaigns</span></div>
+  </div>
+</header>
+<main class="ops">
+  <section class="mapwrap" aria-label="Activity map">
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Region">
+        <button aria-pressed="true" data-region="world">World</button>
+        <button aria-pressed="false" data-region="au">Australia</button>
+        <button aria-pressed="false" data-region="asia">Asia</button>
+        <button aria-pressed="false" data-region="eu">Europe</button>
+        <button aria-pressed="false" data-region="na">Americas</button>
+      </div>
+      <div class="seg" role="group" aria-label="Minimum level">
+        <button aria-pressed="true" data-min="1">All</button>
+        <button aria-pressed="false" data-min="3">Level 3+</button>
+        <button aria-pressed="false" data-min="4">Level 4+</button>
+      </div>
+      <select id="sector" aria-label="Sector">
+        <option value="all">All sectors</option>
+        <option>Government</option><option>Health</option><option>Education</option><option>Utilities</option><option>Finance</option><option>Online shop</option><option>Software</option><option>Small business</option>
+      </select>
+      <select id="vendor" aria-label="Agent"><option value="all">All agents</option></select>
+      <button class="primary" id="replay">Replay a campaign</button>
+    </div>
+    <svg class="map" id="map" role="img" aria-label="World map showing watched sites and agent activity">
+      <g id="grat"></g><g id="land"></g><g id="sensors"></g><g id="markers"></g><g id="labels"></g>
+    </svg>
+    <div id="mapNote" style="position:absolute;left:12px;top:56px;font-size:12px;color:var(--ink-2)"></div>
+    <div class="legend" aria-hidden="true">
+      <i style="background:var(--coast)"></i><span>Watched site, quiet</span>
+      <i style="background:var(--l1)"></i><span>1 · Read</span>
+      <i style="background:var(--l2)"></i><span>2 · Map</span>
+      <i style="background:var(--l3)"></i><span>3 · Probe</span>
+      <i style="background:var(--l4)"></i><span>4 · Attempt</span>
+      <i style="background:var(--l5)"></i><span>5 · Got in</span>
+    </div>
+    <div class="detail" id="detail" role="dialog" aria-label="Visit detail">
+      <button class="close" aria-label="Close" onclick="closeDetail()">×</button>
+      <div id="detailBody"></div>
+    </div>
+  </section>
+  <aside>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="stream">Live</button>
+      <button role="tab" aria-selected="false" data-tab="incidents">Campaigns</button>
+      <button role="tab" aria-selected="false" data-tab="about">About</button>
+    </div>
+    <div class="panel on" id="stream" role="tabpanel"></div>
+    <div class="panel" id="incidents" role="tabpanel"></div>
+    <div class="panel" id="about" role="tabpanel">
+      <div class="about">
+        <h3>One site's sighting becomes every site's warning</h3>
+        <p>Every watched site sends a short note about each visit. Agent Watch rates how far each AI agent went and compares notes with every other site. When the same agent reaches level 3 on 3 or more unrelated sites within 2 hours, it's a campaign, and owners of similar sites are warned.</p>
+        <table>
+          <tr><td>1 · Read</td><td>Read public pages. Shown on the dashboard.</td></tr>
+          <tr><td>2 · Map</td><td>Listed the site's pages, forms and entry points. Shown on the dashboard.</td></tr>
+          <tr><td>3 · Probe</td><td>Tested forms, logins or limits. Email alert.</td></tr>
+          <tr><td>4 · Attempt</td><td>Tried a known break-in trick. Urgent email alert.</td></tr>
+          <tr><td>5 · Got in</td><td>Owner confirms what happened. Set by hand for now.</td></tr>
+        </table>
+        <h3>What we say, and what we guess</h3>
+        <p>If an agent names itself, we show that. If not, it's marked "possible". We report, we don't block; the owner decides. We never see what visitors type, read or upload, and addresses are scrambled the moment they arrive.</p>
+        <p>The public map is on the roadmap after the first version. This page shows how it would look with a network of sites reporting.</p>
+      </div>
+    </div>
+  </aside>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="sheet"><button class="close" aria-label="Close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<script src="assets/vendor.js"></script>
+<script src="assets/app.js"></script>
+<footer style="display:none">
+  <img src="assets/mark.svg" alt="" style="width:22px;height:22px">
+  <span>Live Agent Watch · liveagentwatch.com · concept working model, all activity shown is simulated</span>
+</footer>
+</body>
+</html>

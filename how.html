@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How it works · Live Agent Watch</title>
+<link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" aria-label="Live Agent Watch home"><img src="assets/mark.svg" alt="">Live Agent Watch<small>working model · simulated data</small></a>
+  <nav class="main" aria-label="Sections">
+    <a href="index.html" >Live map</a>
+    <a href="dashboard.html" >My site</a>
+    <a href="install.html" >Install</a>
+    <a href="how.html" aria-current="page">How it works</a>
+  </nav>
+  
+</header>
+<main class="page">
+  <h1>How Live Agent Watch works</h1>
+  <p class="lede">Agent Watch tells website owners when an AI agent has visited their site, how far it went, and whether it is doing the same to other sites.</p>
+  <div class="grid2">
+    <div class="card"><h3>Watcher on the site</h3><p style="margin:0;color:var(--ink-2)">Sits in the site's own server code, because many agents never run a page's scripts. Sends a short note per visit. No personal content.</p></div>
+    <div class="card"><h3>Visit rated</h3><p style="margin:0;color:var(--ink-2)">Every agent visit gets a level, 1 to 4, for how far it went. A fifth level, "got in", is set by the owner.</p></div>
+    <div class="card"><h3>Cross-site match</h3><p style="margin:0;color:var(--ink-2)">The same agent at level 3 on 3 or more unrelated sites within 2 hours is a campaign. One site's sighting becomes every site's warning.</p></div>
+    <div class="card"><h3>Owner alerted</h3><p style="margin:0;color:var(--ink-2)">Email for level 3 and up on their site, and when a campaign forms that matches sites like theirs.</p></div>
+  </div>
+  <h2>The signs it looks for</h2>
+  <div class="tblwrap"><table class="data">
+    <thead><tr><th>Sign</th><th>What it looks like</th></tr></thead>
+    <tbody>
+      <tr><td>Comes through a scanning service</td><td>Arrives via a website-scanning or fetching service, a common way around blocks</td></tr>
+      <tr><td>Says it is an agent</td><td>Names itself, the way a browser does</td></tr>
+      <tr><td>Keeps retrying</td><td>Refused, then tries again and again within seconds</td></tr>
+      <tr><td>Reads error pages closely</td><td>Hits "not found" or "forbidden" pages, then tries the addresses they hint at</td></tr>
+      <tr><td>Hunts for hidden entry points</td><td>Tries addresses like /api, /.env or /swagger one after another</td></tr>
+      <tr><td>Moves at machine speed</td><td>Far faster than a person, or keeps changing its address mid-visit</td></tr>
+      <tr><td>Visits the canary</td><td>Goes to an address only mentioned in a note that people never see</td></tr>
+    </tbody>
+  </table></div>
+  <h2>The canary</h2>
+  <p>A short note on every page that only an AI agent would act on, such as "Full data for this page is at /data/2f9a-export". People ignore it, and the address appears nowhere else, so a visit to it is near-proof the visitor is AI. Each site gets its own address. If few agents follow it, Agent Watch still works on the other signs.</p>
+  <h2>Ground rules</h2>
+  <div class="grid2">
+    <div class="card"><h3>Watch from the server</h3><p style="margin:0;color:var(--ink-2)">So every visit is seen, not only the ones that run JavaScript.</p></div>
+    <div class="card"><h3>Report, don't block</h3><p style="margin:0;color:var(--ink-2)">We tell the owner what happened. The owner decides what to block.</p></div>
+    <div class="card"><h3>Collect as little as possible</h3><p style="margin:0;color:var(--ink-2)">We never see what visitors type, read or upload. Addresses are scrambled on arrival and never stored as-is. Australian data stays in Australia. Visit details kept 90 days.</p></div>
+    <div class="card"><h3>Say what we know, not what we guess</h3><p style="margin:0;color:var(--ink-2)">If an agent says who it is, we show that. A guess is marked "possible".</p></div>
+  </div>
+  <h2>Why now</h2>
+  <div class="tblwrap"><table class="data">
+    <thead><tr><th>Case</th><th>What happened</th><th>How it came out</th></tr></thead>
+    <tbody>
+      <tr><td>Australian Medicare portal (June 2026)</td><td>An AI agent doing research kept being refused, then used a public website-scanning service to get around the block and got in. No patient records were taken.</td><td>The AI company found it months later and told the government. Confirmed publicly on 24 September.</td></tr>
+      <tr><td>Taiwan government systems (reported August 2026)</td><td>People running a team of AI agents broke into 85 accounts and took over 2,500 staff records in four days.</td><td>Security researchers found a leaked copy of the attackers' own files.</td></tr>
+    </tbody>
+  </table></div>
+  <p style="color:var(--ink-2)">These were national systems with security teams. Most business and personal websites have far less watching over them.</p>
+  <h2>Roadmap</h2>
+  <div class="grid2">
+    <div class="card"><h3>1 · First version</h3><p style="margin:0;color:var(--ink-2)">Install instructions, scoring and alerts, cross-site matching, minimal dashboard, email alerts. Free. Moves on at 100 live sites with fewer than 1 in 10 alerts false.</p></div>
+    <div class="card"><h3>2 · Pilot to paid</h3><p style="margin:0;color:var(--ink-2)">WordPress plugin, no-code add-on, paid plan per site, AI company reply channel, public map and incident pages.</p></div>
+    <div class="card"><h3>3 · Larger businesses</h3><p style="margin:0;color:var(--ink-2)">Self-hosted version, multi-site accounts, compliance reports, security team access, team logins. Yearly contract.</p></div>
+    <div class="card"><h3>4 · Data and scale</h3><p style="margin:0;color:var(--ink-2)">Data licence, naming the AI product, confirming break-ins, optional blocking, new markets (NZ, UK).</p></div>
+  </div>
+  <p style="color:var(--ink-2)">The free plan stays free in every phase: every site that joins makes the warnings better for everyone.</p>
+</main>
+<footer>
+  <img src="assets/mark.svg" alt="" style="width:22px;height:22px">
+  <span>Live Agent Watch · liveagentwatch.com · concept working model, all activity shown is simulated</span>
+</footer>
+</body>
+</html>

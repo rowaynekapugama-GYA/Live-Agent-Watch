@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My site · Live Agent Watch</title>
+<link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" aria-label="Live Agent Watch home"><img src="assets/mark.svg" alt="">Live Agent Watch<small>working model · simulated data</small></a>
+  <nav class="main" aria-label="Sections">
+    <a href="index.html" >Live map</a>
+    <a href="dashboard.html" aria-current="page">My site</a>
+    <a href="install.html" >Install</a>
+    <a href="how.html" >How it works</a>
+  </nav>
+  
+</header>
+<main class="page">
+  <h1>Camden Council</h1>
+  <p class="lede">Did an AI agent visit this site, and how far did it go? Simulated data for a demo site.</p>
+  <div class="stat-row">
+    <div class="stat"><b id="sAgents">0</b><span>agent visits, 24h</span></div>
+    <div class="stat"><b id="sCanary">0</b><span>canary hits</span></div>
+    <div class="stat"><b id="sTop">Read</b><span>highest level seen</span></div>
+    <div class="stat"><b id="sAlso">0</b><span>also seen on other sites</span></div>
+  </div>
+  <div class="tblwrap">
+    <table class="data">
+      <thead><tr><th>Time</th><th>Who it said it was</th><th>Arrived via</th><th>Level</th><th>Signs</th><th>Also seen on</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <div class="actions">
+    <button class="ghost" onclick="toast('Weekly summary emailed. Nothing above level 2 this week except the campaign on Tuesday.')">Email me a summary</button>
+    <button class="ghost" onclick="toast('Block rules copied for Cloudflare, AWS WAF and nginx: 2 agents, 1 scanning service. Blocking is your call, not ours.')">Copy block rules</button>
+    <button class="ghost" onclick="toast('Report generated: every agent visit in the last 30 days, in order, with the signs behind each rating.')">Download report</button>
+  </div>
+  <h2>Alerts</h2>
+  <div class="card">
+    <h3>Email only, for now</h3>
+    <p style="margin:0;color:var(--ink-2)">Straight away for level 3 or 4 on this site, and when a campaign forms that matches sites like yours. Nothing for level 1 or 2, so the inbox stays quiet.</p>
+  </div>
+  <h2>Watcher status</h2>
+  <div class="grid2">
+    <div class="card"><h3>Backend watcher</h3><p style="margin:0;color:var(--ink-2)">Live. Reporting from the site's own server code. Last note received 12 seconds ago.</p></div>
+    <div class="card"><h3>Canary</h3><p style="margin:0;color:var(--ink-2)">Live. This site's canary address is unique and appears nowhere else. Retested weekly.</p></div>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+  const FAM=[['Says it is a browser agent from a large AI company','Website-scanning service'],['Possible API agent (does not name itself)','Direct, rotating addresses'],['Possible open-source agent stack','Residential proxy'],['Unknown automation','Cloud fetch service']];
+  const LV=['','Read','Map','Probe','Attempt']; const CO=['','var(--l1)','var(--l2)','var(--l3)','var(--l4)'];
+  const SIGNS=['scanning service','kept retrying','read error pages','hunted for entry points','machine speed','canary','named itself'];
+  const rows=[]; const now=Date.now();
+  for(let i=0;i<14;i++){ const r=Math.random(); const lvl=r<0.6?1:r<0.85?2:r<0.95?3:4; const f=FAM[Math.floor(Math.random()*4)]; const canary=Math.random()<0.5; const signs=[]; const n=1+lvl; while(signs.length<n){const s=SIGNS[Math.floor(Math.random()*SIGNS.length)]; if(!signs.includes(s)) signs.push(s);} if(canary&&!signs.includes('canary')) signs.push('canary'); rows.push({when:now-Math.floor(Math.random()*24*3600*1000),f,lvl,canary,signs,also:lvl>=3?1+Math.floor(Math.random()*5):(Math.random()<0.3?1:0)}); }
+  rows.sort((a,b)=>b.when-a.when);
+  const fmt=t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('sAgents').textContent=rows.length;
+  document.getElementById('sCanary').textContent=rows.filter(r=>r.canary).length;
+  document.getElementById('sTop').textContent=LV[Math.max(...rows.map(r=>r.lvl))];
+  document.getElementById('sAlso').textContent=rows.filter(r=>r.also).length;
+  document.getElementById('rows').innerHTML=rows.map(r=>`<tr><td>${fmt(r.when)}</td><td>${r.f[0]}</td><td>${r.f[1]}</td><td><span class="lvl" style="background:${CO[r.lvl]}">${r.lvl}. ${LV[r.lvl]}</span></td><td>${r.signs.map(s=>'<span class="chip">'+s+'</span>').join('')}</td><td>${r.also?r.also+' site'+(r.also>1?'s':''):'none yet'}</td></tr>`).join('');
+  window.toast=t=>{const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');clearTimeout(x._t);x._t=setTimeout(()=>x.classList.remove('show'),3500);};
+})();
+</script>
+<footer>
+  <img src="assets/mark.svg" alt="" style="width:22px;height:22px">
+  <span>Live Agent Watch · liveagentwatch.com · concept working model, all activity shown is simulated</span>
+</footer>
+</body>
+</html>
