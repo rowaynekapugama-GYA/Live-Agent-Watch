@@ -27,11 +27,11 @@
   <div class="card">
     <h3>Step 1 · Add your site</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px">
-      <label style="font-size:12px;color:var(--ink-2)">Site name<input id="n" type="text" value="Camden Council" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"></label>
-      <label style="font-size:12px;color:var(--ink-2)">Address<input id="u" type="text" value="https://www.camden.nsw.gov.au" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"></label>
-      <label style="font-size:12px;color:var(--ink-2)">Site type<select id="t" style="display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font:inherit;color:var(--ink)"><option>Own server (Node, PHP, Python, .NET)</option><option>Separate frontend (React on Vercel) + server</option><option>No server (Wix, Squarespace, static)</option></select></label>
+      <label class="field">Site name<input id="n" type="text" value="Camden Council"></label>
+      <label class="field">Address<input id="u" type="text" value="https://www.camden.nsw.gov.au"></label>
+      <label class="field sel">Site type<select id="t"><option>Own server (Node, PHP, Python, .NET)</option><option>Separate frontend (React on Vercel) + server</option><option>No server (Wix, Squarespace, static)</option></select></label>
     </div>
-    <div class="actions"><button class="primary" style="margin-left:0" onclick="gen()">Get key and instructions</button></div>
+    <div class="actions"><button class="primary accent" style="margin-left:0" onclick="gen()">Get key and instructions</button></div>
   </div>
   <div id="out" style="display:none">
     <div class="card">

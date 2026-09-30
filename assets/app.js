@@ -80,7 +80,7 @@
       const pt = projection([s.site.lon, s.site.lat]); if (!pt) return; const [x, y] = pt;
       const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'marker'); g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.setAttribute('aria-label', s.site.name + ': ' + LEVELS[s.lvl]);
       if (s.lvl >= 3 && Date.now() - s.when < 3600 * 1000) { const p = document.createElementNS(NS, 'circle'); p.setAttribute('cx', x); p.setAttribute('cy', y); p.setAttribute('r', 8); p.setAttribute('fill', COLORS[s.lvl]); p.setAttribute('class', 'pulse'); g.appendChild(p); }
-      const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', s.lvl >= 3 ? 5.5 : 4); c.setAttribute('fill', COLORS[s.lvl]); c.setAttribute('stroke', 'var(--paper-2)'); c.setAttribute('stroke-width', '1.5'); c.setAttribute('class', 'core'); g.appendChild(c);
+      const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', s.lvl >= 3 ? 5.5 : 4); c.setAttribute('fill', COLORS[s.lvl]); c.setAttribute('stroke', '#FFFFFF'); c.setAttribute('stroke-width', '1.5'); c.setAttribute('class', 'core'); g.appendChild(c);
       g.addEventListener('click', () => showDetail(s)); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDetail(s); } });
       gM.appendChild(g);
     });
